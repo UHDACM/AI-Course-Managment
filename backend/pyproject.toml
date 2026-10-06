@@ -1,7 +1,7 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "Using AI to use AI to do AI things, also AI. Pls give us money"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
