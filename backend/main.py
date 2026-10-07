@@ -1,6 +1,3 @@
-def main():
-    print("Hello from backend!")
-
 app = FastAPI()
 
 @app.get("/")
