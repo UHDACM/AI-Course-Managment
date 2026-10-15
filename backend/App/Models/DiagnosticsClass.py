@@ -1,4 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
+from app.core.config import get_database_settings
 from contextlib import asynccontextmanager
 
 class Diagnostics(object):
