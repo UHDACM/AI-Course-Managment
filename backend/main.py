@@ -1,11 +1,10 @@
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
-from app.core import database
+from app.core.database import connect_to_mongo, close_mongo_connection
 
 async def lifespan(app: FastAPI):
-    await core.database.connect_to_mongo()
+    await connect_to_mongo()
     yield
-    await core.database.close_mongo_connection()
+    await close_mongo_connection()
 
 app = FastAPI(
     title = "Backend API",
@@ -23,6 +22,6 @@ def read_item(item_id: int, q: str = None):
     return {"item_id": item_id, "q": q}
 
 @app.get("/health")
-def read_health():
-    connect_to_mongo()
+async def read_health():
+    await connect_to_mongo()
     return {"status": "healthy"}
