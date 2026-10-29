@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.core.database import connect_to_mongo, close_mongo_connection
+from app.core.database import connect_to_mongo, close_mongo_connection, get_server_status
 
 async def lifespan(app: FastAPI):
     await connect_to_mongo()
@@ -23,5 +23,5 @@ def read_item(item_id: int, q: str = None):
 
 @app.get("/health")
 async def read_health():
-    await connect_to_mongo()
-    return {"status": "healthy"}
+    serverStatus = await get_server_status()
+    return {"Server Status": serverStatus}

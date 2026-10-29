@@ -3,7 +3,8 @@ from functools import lru_cache
 
 class DatabaseSettings(BaseSettings):
     mongodb_url: str="mongodb://localhost:27017"
-    mongodb_database: str="TestingMongo"
+    mongodb_database: str="ClassSampleDB"
+    mongodb_collection: str="ClassesAndAssignments"
 
     mongodb_min_pool_size: int=10
     mongodb_max_pool_size: int=100

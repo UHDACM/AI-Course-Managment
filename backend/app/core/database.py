@@ -47,12 +47,10 @@ async def get_server_status() -> str:
     if db.client is None:
         return "MongoDB client is not initialized."
     try:
-        await client.admin.command("ping")
+        await db.client.admin.command("ping")
         return "MongoDB server is reachable."   
     except Exception as e:
         return f"Failed to connect: {e}"
-    finally:
-        db.client.close()
 
 def get_database() -> AsyncIOMotorDatabase:
     if db.database is None:
