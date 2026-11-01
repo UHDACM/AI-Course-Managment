@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.core.database import connect_to_mongo, close_mongo_connection
+from app.routers import courses
 
 async def lifespan(app: FastAPI):
     await connect_to_mongo()
@@ -12,6 +13,8 @@ app = FastAPI(
     version = "0.1.0",
     lifespan = lifespan
 )
+
+app.include_router(courses.router)
 
 @app.get("/")
 def read_root():
