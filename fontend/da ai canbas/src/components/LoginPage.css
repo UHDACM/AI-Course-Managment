@@ -1,0 +1,97 @@
+body{
+    margin:0;
+}
+
+.design {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+
+
+.left-side {
+    width: 100px;
+    height:100vh;
+    align-content: end;
+}
+
+.acmlogo {
+    border-radius: 50px;
+    width: 50px;
+    
+}
+
+
+.container {
+    height: 100vh;
+    min-width: 100vh;
+}
+
+.right-side {
+    width: 100px;
+}
+
+.middle {
+    width: 800px;
+    height: 100vh;
+    margin: 0 auto;
+    border-style: double;
+    background-image: url('../assets/images/uhd.jpg');
+    background-size: cover;
+}
+
+.middle-top{
+    height:300px;
+}
+.show-hide{
+    background-color: rgb(235, 234, 234);
+    border-radius: 10px;
+    font-size:20px;
+    padding:5px 15px;
+    cursor: pointer;
+    border:none;
+}
+
+
+.show-pass{
+    display:inline-block;
+}
+
+
+.welcome {
+    font-weight: bold;
+    font-size: 38px;
+
+}
+
+.input-container{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+}
+
+.input-fields{
+    display: block;
+    width:400px;
+    
+}
+.input-box{
+    margin:10px 10px;
+    width: 200px;
+    padding:10px 20px;
+}
+.login:disabled{
+    cursor:default;
+}
+
+.login{
+    width:100px;
+    margin-right:150px;
+    padding: 5px 5px;
+    cursor:pointer;
+}
