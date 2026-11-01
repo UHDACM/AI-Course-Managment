@@ -37,7 +37,7 @@ class CourseResponse(MongoModel):
     code: str
     description: str | None = None
     term: str | None = None
-    instructor_name: str
+    instructor_name: str | None = None
 
 
 class SyllabusUpdate(BaseModel):
