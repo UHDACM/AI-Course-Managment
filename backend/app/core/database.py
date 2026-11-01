@@ -1,6 +1,7 @@
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from app.core.config import get_database_settings
 from typing import Optional
+from urllib.parse import urlsplit
 import logging
 
 logger = logging.getLogger(__name__)
@@ -14,7 +15,7 @@ db = Database()
 async def connect_to_mongo():
     settings = get_database_settings()
 
-    logger.info(f"Connecting to MongoDB at {settings.mongodb_url}...")
+    logger.info(f"Connecting to MongoDB at {urlsplit(settings.mongodb_url).hostname}...")
 
     db.client = AsyncIOMotorClient(
         settings.mongodb_url,
