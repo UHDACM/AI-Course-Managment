@@ -5,6 +5,16 @@ from app.core.database import get_database
 from app.models import CourseCreate, CourseInDB, CourseResponse
 from app.models.common import utc_now
 
+
+#weird stuff
+from fastapi.encoders import jsonable_encoder
+
+
+
+
+
+
+
 router = APIRouter(prefix="/api/courses", tags=["courses"])
 
 
@@ -35,3 +45,20 @@ async def create_course(
     instructor_name = instructor["name"] if instructor else None
 
     return CourseResponse(**saved.model_dump(), instructor_name=instructor_name)
+
+
+
+
+
+
+#weird stuff
+@router.get("")
+async def get_courses():
+    db = get_database()
+
+    courses = await db.courses.find({}).to_list(length=100)
+
+    return jsonable_encoder(
+        courses,
+        custom_encoder={ObjectId: str}
+    )
