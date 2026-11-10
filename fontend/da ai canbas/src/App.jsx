@@ -9,7 +9,7 @@ function App() {
   return (
     <Routes>
       <Route index element={<LoginPage />} />
-      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="*" element={<Error />} />
     </Routes>
   );

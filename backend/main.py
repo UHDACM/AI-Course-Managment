@@ -2,6 +2,18 @@ from fastapi import FastAPI
 from app.core.database import connect_to_mongo, close_mongo_connection
 from app.routers import courses
 
+
+
+
+
+#weird stuff
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
+
+
+
 async def lifespan(app: FastAPI):
     await connect_to_mongo()
     yield
@@ -13,6 +25,28 @@ app = FastAPI(
     version = "0.1.0",
     lifespan = lifespan
 )
+
+
+
+
+
+#weird stuff
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+
+
+
 
 app.include_router(courses.router)
 

@@ -1,6 +1,4 @@
-body{
-    margin:0;
-}
+
 
 .design {
     color: black;
@@ -9,14 +7,6 @@ body{
     align-items: center;
     justify-content: flex-start;
 
-}
-
-
-
-.left-side {
-    width: 100px;
-    height:100vh;
-    align-content: end;
 }
 
 .acmlogo {
@@ -30,12 +20,21 @@ body{
     height: 100vh;
     min-width: 100vh;
 }
+.left-side {
+    width: 100px;
+    height:100vh;
+    align-content: end;
+    min-width: 100px;
+}
 
 .right-side {
+    height: 100vh;
     width: 100px;
+    min-width: 100px;
 }
 
 .middle {
+    min-width: 700px;
     width: 800px;
     height: 100vh;
     margin: 0 auto;
