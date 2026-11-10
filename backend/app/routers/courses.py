@@ -1,7 +1,7 @@
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Query
 
-from app.core.database import get_database
+from app.core.db import get_db as get_database
 from app.models import CourseCreate, CourseInDB, CourseResponse
 from app.models.common import utc_now
 

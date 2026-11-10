@@ -1,5 +1,7 @@
 import "./Dashboard.css";
 import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router";
+import { clearToken, getToken } from "../api.js";
 
 const API_URL = "http://localhost:8000/api/courses";
 
@@ -18,6 +20,7 @@ const hardcodedCourse = {
 };
 
 export function Dashboard() {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,6 +44,15 @@ export function Dashboard() {
     loadCourses();
   }, []);
 
+  if (!getToken()) {
+    return <Navigate to="/" replace />;
+  }
+
+  function handleLogout() {
+    clearToken();
+    navigate("/");
+  }
+
   const allCourses = [hardcodedCourse, ...courses];
 
   return (
@@ -63,6 +75,7 @@ export function Dashboard() {
         <header className="dash-header">
           <h1 className="dash-title">Dashboard</h1>
           <button type="button" className="dash-options-btn">Dashboard options</button>
+          <button type="button" className="dash-options-btn" onClick={handleLogout}>Log out</button>
         </header>
 
         <section >
