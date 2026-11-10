@@ -17,3 +17,21 @@ class DatabaseSettings(BaseSettings):
 
 def get_database_settings() -> DatabaseSettings:
     return DatabaseSettings()
+
+
+class Settings(BaseSettings):
+    """Settings for the auth / classes / assignments / submissions API (app/main.py)."""
+
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    mongodb_url: str
+    mongodb_database: str
+    jwt_secret: str
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 60
+    max_upload_bytes: int = 10 * 1024 * 1024  # 10 MB
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
