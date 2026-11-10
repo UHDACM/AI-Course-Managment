@@ -2,23 +2,47 @@ import './LoginPage.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import ACMLogo from '../assets/images/uhd_acm_logo.jpg';
+import { login, register } from '../api.js';
 
 export function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [accountCreated, setAccountCreated] = useState(false);
+    const [createMode, setCreateMode] = useState(false);
+    const [name, setName] = useState('');
+    const [isProfessor, setIsProfessor] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        if (!accountCreated) {
-            setError('No account found. Check the box to "create" one.');
+        setError('');
+
+        if (createMode && password.length < 8) {
+            setError('Password must be at least 8 characters.');
             return;
         }
-        setError('');
-        navigate('/dashboard');
+
+        setLoading(true);
+        try {
+            if (createMode) {
+                await register({
+                    email: email.trim(),
+                    name: name.trim(),
+                    password,
+                    role: isProfessor ? 'teacher' : 'student',
+                });
+            }
+            await login(email.trim(), password);
+            navigate('/dashboard');
+        } catch (err) {
+            setError(err.message === 'Failed to fetch'
+                ? 'Could not reach the server. Is the backend running on port 8000?'
+                : err.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -33,13 +57,23 @@ export function LoginPage() {
 
                 <div className="middle">
                     <div className="middle-top">
-                        <p className="welcome">Welcome to Canvas</p>
+                        <p className="welcome">Welcome to AI CANVAS</p>
                         <p>Yilmaz</p>
                         <p>This is a barebones login page</p>
                     </div>
 
                     <form className="input-container" onSubmit={handleSubmit}>
                         <div className="input-fields">
+                            {createMode && (
+                                <input
+                                    type="text"
+                                    autoComplete="name"
+                                    className="input-box"
+                                    placeholder="Full name"
+                                    value={name}
+                                    onChange={(event) => setName(event.target.value)}
+                                />
+                            )}
                             <input
                                 type="text"
                                 autoComplete="email"
@@ -70,18 +104,33 @@ export function LoginPage() {
                         {error && <p role="alert">{error}</p>}
 
                         
-                        <button type="submit" className="login" disabled={!email || !password}>
-                            Login
+                        <button
+                            type="submit"
+                            className="login"
+                            disabled={loading || !email || !password || (createMode && !name.trim())}
+                        >
+                            {loading ? 'Please wait...' : createMode ? 'Create account' : 'Login'}
                         </button>
 
                         <label>
                             <input
                                 type="checkbox"
-                                checked={accountCreated}
-                                onChange={() => setAccountCreated(!accountCreated)}
+                                checked={createMode}
+                                onChange={() => { setCreateMode(!createMode); setError(''); }}
                             />
-                            Check the box to "create" an account (theoretical stuff)
+                            Create a new account
                         </label>
+
+                        {createMode && (
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={isProfessor}
+                                    onChange={() => setIsProfessor(!isProfessor)}
+                                />
+                                I'm a professor
+                            </label>
+                        )}
                     </form>
                 </div>
 
