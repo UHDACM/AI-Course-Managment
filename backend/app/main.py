@@ -8,12 +8,6 @@ from app.routers import assignments, auth, classes, courses, submissions
 
 
 
-#weird stuff
-from fastapi.middleware.cors import CORSMiddleware
-
-
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     db.connect()
