@@ -41,3 +41,5 @@ async def create_indexes() -> None:
     await db.submissions.create_index(
         [("assignment_id", 1), ("student_id", 1)], unique=True
     )
+    await db.assignments.create_index("due_date")
+    await db.todos.create_index([("user_id", 1), ("date", 1)])

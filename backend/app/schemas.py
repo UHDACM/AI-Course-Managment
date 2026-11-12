@@ -1,3 +1,4 @@
+from datetime import date as Date
 from datetime import datetime
 from typing import Literal
 
@@ -98,4 +99,48 @@ def submission_out(s: dict) -> SubmissionOut:
         student_id=str(s["student_id"]),
         filename=s["filename"],
         submitted_at=s["submitted_at"],
+    )
+
+
+
+class TodoIn(BaseModel):
+    title: str = Field(min_length=1, max_length=200)
+    date: Date
+    description: str = ""
+
+
+class TodoUpdate(BaseModel):
+    title: str | None = Field(default=None, min_length=1, max_length=200)
+    date: Date | None = None
+    description: str | None = None
+    completed: bool | None = None
+
+
+class TodoOut(BaseModel):
+    id: str
+    title: str
+    date: Date
+    description: str
+    completed: bool
+    created_at: datetime
+
+
+class CalendarAssignmentOut(AssignmentOut):
+    completed: bool = False  # student has submitted it
+
+
+class CalendarDayOut(BaseModel):
+    date: Date
+    todos: list[TodoOut]
+    assignments: list[CalendarAssignmentOut]
+
+
+def todo_out(t: dict) -> TodoOut:
+    return TodoOut(
+        id=str(t["_id"]),
+        title=t["title"],
+        date=Date.fromisoformat(t["date"]),
+        description=t.get("description", ""),
+        completed=t.get("completed", False),
+        created_at=t["created_at"],
     )

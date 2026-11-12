@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core import db
-from app.routers import assignments, auth, classes, courses, submissions
+from app.routers import assignments, auth, calendar, classes, courses, submissions
 
 
 @asynccontextmanager
@@ -30,6 +30,7 @@ app.include_router(courses.router)
 app.include_router(classes.router)
 app.include_router(assignments.router)
 app.include_router(submissions.router)
+app.include_router(calendar.router)
 
 
 @app.get("/health", tags=["meta"])
