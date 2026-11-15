@@ -7,6 +7,7 @@ from app.core import db
 from app.routers import assignments, auth, classes, courses, submissions
 
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     db.connect()

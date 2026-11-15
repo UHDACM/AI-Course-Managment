@@ -1,8 +1,7 @@
 import "./Dashboard.css";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router";
-import { clearToken, getToken } from "../api.js";
-
+import { Link, useNavigate } from "react-router";
+import { clearToken } from "../api.js";
 const API_URL = "http://localhost:8000/api/courses";
 
 const CARD_COLORS = ['rgb(46, 167, 116)', 'rgb(47, 48, 104)', 'rgb(180, 49, 34)', 'rgb(207, 152, 48)', 'rgb(153, 37, 128)', 'rgb(43, 77, 83)'];
@@ -44,31 +43,18 @@ export function Dashboard() {
     loadCourses();
   }, []);
 
-  if (!getToken()) {
-    return <Navigate to="/" replace />;
-  }
-
   function handleLogout() {
-    clearToken();
-    navigate("/");
-  }
+  clearToken();
+  navigate("/");
+}
+
+
 
   const allCourses = [hardcodedCourse, ...courses];
 
   return (
-    <div className="dash-layout">
-      {/* Left/Nav */}
-      <nav className="dash-rail" >
-        <div className="dash-rail-logo">C.AI</div>
-        <ul className="dash-rail-list">
-          <li><a href="/account" className="dash-rail-link">Account</a></li>
-          <li><a href="/dashboard" className="dash-rail-link is-active">Dashboard</a></li>
-          <li><a href="/courses" className="dash-rail-link">Courses</a></li>
-          <li><a href="/calendar" className="dash-rail-link">Calendar</a></li>
-          <li><a href="/inbox" className="dash-rail-link">Inbox</a></li>
-          <li><a href="/help" className="dash-rail-link">Help</a></li>
-        </ul>
-      </nav>
+    <div className="dash-page">
+
 
       {/* Main/Middle content */}
       <main className="dash-main">
@@ -94,7 +80,7 @@ export function Dashboard() {
           <ul className="course-grid">
             {allCourses.map((course, i) => (
               <li key={course._id} className="course-card">
-                <a href={`/courses/${course._id}`} className="course-card-link">
+                <Link to={`/courses/${course._id}`} className="course-card-link">
                   <div
                     className="course-card-hero"
                     style={{ backgroundColor: CARD_COLORS[i % CARD_COLORS.length] }}
@@ -104,11 +90,11 @@ export function Dashboard() {
                     <p className="course-card-code">{course.code}</p>
                     <p className="course-card-term">{course.term}</p>
                   </div>
-                </a>
+                </Link>
                 <div className="course-card-footer">
-                  <a href={`/courses/${course._id}/assignments`} className="course-card-tool">Assignments</a>
-                  <a href={`/courses/${course._id}/syllabus`} className="course-card-tool">Syllabus</a>
-                  <a href={`/courses/${course._id}/ai`} className="course-card-tool">AI Assistant</a>
+                  <Link to={`/courses/${course._id}/assignments`} className="course-card-tool">Assignments</Link>
+                  <Link to={`/courses/${course._id}/syllabus`} className="course-card-tool">Syllabus</Link>
+                  <Link to={`/courses/${course._id}/ai`} className="course-card-tool">AI Assistant</Link>
                 </div>
               </li>
             ))}
@@ -136,4 +122,3 @@ export function Dashboard() {
     </div>
   );
 }
-
